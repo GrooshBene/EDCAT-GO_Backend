@@ -18,6 +18,10 @@ app.use(bodyParser.urlencoded({
     extended : true
 }));
 
+app.use(serveStatic(__dirname, ({
+    'index' : false
+})));
+
 var server = require('http').Server(app);
 
 var https = require('https');
@@ -79,3 +83,5 @@ var Cat = mongoose.model('cats', catSchema);
 require('./route/oauth')(app,User);
 
 require('./route/catch')(app,User,Cat);
+
+require('./route/pay')(app, User);

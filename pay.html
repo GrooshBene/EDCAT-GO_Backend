@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EDCAT GO Payment</title>
+</head>
+<body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.1.js"></script>
+<script type="text/javascript">
+    var IMP = window.IMP;
+    IMP.init('imp59392671');
+    IMP.request_pay({
+        pg : 'kakaopay',
+        pay_method : 'card',
+        merchant_uid : 'merchant_' + new Date().getTime(),
+        name : "주문명 : 결제테스트",
+        amount : 2000,
+        currency : 'KRW',
+        m_redirect_url : 'http://localhost:7080/pay/complete'
+    });
+</script>
+
+<form enctype="application/x-www-form-urlencoded">
+    <submit onclick="IMP.request_pay()"></submit>
+</form>
+</body>
+</html>
