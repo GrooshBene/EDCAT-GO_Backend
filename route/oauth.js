@@ -8,8 +8,6 @@ function init(app, User){
 
     var passport = require('passport');
 
-    var randomString = require('randomstring');
-
     app.use(passport.initialize());
 
     app.use(passport.session());
@@ -80,8 +78,64 @@ function init(app, User){
     }));
 
     app.post('/user/addexp', function (req, res) {
+        var temp_exp = 0;
+        User.findOne({_id : req.param('id')}, function (err, result) {
+            if(err){
+                console.log("/user/addexp Error");
+                throw err;
+            }
 
-    })
+            temp_exp = result.exp;
+            console.log('user'+ result.name + "'s exp : " + temp_exp);
+            temp_exp = temp_exp + req.param('exp');
+
+            console.log('user'+ result.name + "'s exp added : " + temp_exp);
+            User.update({_id : req.param('id')}, {exp : temp_exp}, function (err, result) {
+                if(err){
+                    console.log("/user/addexp Update Error");
+                    throw err;
+                }
+                res.send(200, result);
+                console.log("User Updated : " + result);
+            });
+        })
+    });
+
+    app.post('/user/getrank', function (req, res) {
+        User.find($query : {}, $orderby : {exp : 1}, function(err, result) {
+            if(err){
+                console.log('/user/getrank db error');
+                throw err;
+            }
+
+            console.log("Current Ranking : "+ result);
+            res.send(200, result);
+        });
+    });
+
+    app.post('/user/catinfo', function (req, res) {
+        User.findOne({_id : req.param('id')}, function (err, result) {
+            if(err){
+                console.log('/user/catinfo db error');
+                throw err;
+            }
+
+            console.log('User '+ result.name + "'s cat : "+ result.cats);
+            res.send(200, result.cats);
+        });
+    });
+
+    app.post('/user/userinfo', function (req, res) {
+        User.findOne({_id : req.param('id')}, function (err, result) {
+            if(err){
+                console.log('/user/userinfo db error');
+                throw err;
+            }
+
+            console.log('User '+ result+ ' founded');
+            res.send(200, result);
+        });
+    });
 
 
 
