@@ -24,6 +24,9 @@ app.use(serveStatic(__dirname, ({
 
 var server = require('http').Server(app);
 
+console.log('Server Running At Port 7070');
+server.listen(7070);
+
 var https = require('https');
 
 

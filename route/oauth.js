@@ -102,7 +102,7 @@ function init(app, User){
     });
 
     app.post('/user/getrank', function (req, res) {
-        User.find($query : {}, $orderby : {exp : 1}, function(err, result) {
+        User.find({$query : {}, $orderby : {exp : 1}}, function(err, result) {
             if(err){
                 console.log('/user/getrank db error');
                 throw err;
