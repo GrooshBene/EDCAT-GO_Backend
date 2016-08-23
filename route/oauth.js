@@ -79,6 +79,10 @@ function init(app, User){
         failureRedirect : "/"
     }));
 
+    app.post('/user/addexp', function (req, res) {
+
+    })
+
 
 
     //function end

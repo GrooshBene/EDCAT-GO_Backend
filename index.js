@@ -55,6 +55,10 @@ var userSchema = new schema({
 
     cats : {
         type : Array
+    },
+
+    exp : {
+        type : Number
     }
 });
 
