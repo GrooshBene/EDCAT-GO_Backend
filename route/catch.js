@@ -58,6 +58,17 @@ function init(app, User, Cat) {
         });
     });
 
+    app.post('/catch/catinfo', function (req, res) {
+        Cat.findOne({_id : req.param('id')}, function (err, result) {
+            if(err){
+                console.log('/catch/catinfo db error');
+                throw err;
+            }
+            console.log("Cat Id "+ req.param('id') + "'s info : "+ result);
+            res.send(200, result);
+        })
+    })
+
 
 
     //function end
