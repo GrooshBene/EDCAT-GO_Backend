@@ -35,7 +35,7 @@ function init(app, User, Cat) {
             date : new Date()
         });
 
-        Cat.find({_id : cat._id}, function (err, result) {
+        Cat.findOne({_id : cat._id}, function (err, result) {
             if(err){
                 console.log('/catch/newcat duplicate check error');
                 throw err;
