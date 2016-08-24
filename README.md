@@ -106,6 +106,23 @@ Backend Server of EDCAT-GO
 
 >> type : 고양이의 종류. 0부터 20까지 존재하고, 각 인덱스에 따른 종류는 하단 참조
 
+> Response
+
+>> Cat Schema
+
+
+
+
+* /catch/catinfo : db에 등록된 고양이의 정보를 조회합니다.
+
+> Requiring Params
+
+>> id : 고양이의 고유 ㅓㄴ호
+
+> Response
+
+>> Cat Schema
+
 
 
 
