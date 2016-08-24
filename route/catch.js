@@ -10,7 +10,7 @@ function init(app, User, Cat) {
     app.post('/catch/newcat', function (req, res) {
 
         var temp_catArr = [];
-        User.findOne({_id : id}, function (err, result) {
+        User.findOne({_id : req.param('id')}, function (err, result) {
             if(err){
                 console.log('/catch/newcat db error!');
                 throw err;
@@ -19,7 +19,7 @@ function init(app, User, Cat) {
             console.log('User '+ result.name + "Caught a new Cat!");
             temp_catArr = result.cats;
             temp_catArr.push(req.param('id'));
-            User.update({_id : id}, {cats : temp_catArr}, function (err, result_update) {
+            User.update({_id : req.param('id')}, {cats : temp_catArr}, function (err, result_update) {
                 if(err){
                     console.log('/catch/newcat Update Error');
                     throw err;
@@ -28,11 +28,12 @@ function init(app, User, Cat) {
             });
         });
 
-        var cat = new Cat();
-        cat._id = req.param('id');
-        cat.name = req.param('catname');
-        cat.type = req.param('type');
-        cat.date = new Date();
+        var cat = new Cat({
+            _id : randomString.generate(15),
+            name : req.param('catname'),
+            type : req.param('type'),
+            date : new Date()
+        });
 
         cat.save(function (err, silence) {
             if(err){

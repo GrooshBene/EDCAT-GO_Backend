@@ -23,8 +23,8 @@ function init(app, User){
     });
 
     passport.use(new FacebookTokenStrategy({
-        clientID : "",
-        clientSecret : "",
+        clientID : "671688369646929",
+        clientSecret : "f634fd2532169967f4f58e157b16b47e",
         profileFields : ['id', 'displayName', 'photos', 'permissions', 'gender']
     }, function (accessToken, refreshToken, profile, done) {
         console.log(profile + " 이 로그인 요청을 보냈습니다 (페이스북).");
@@ -41,7 +41,8 @@ function init(app, User){
                     name : profile.displayName,
                     profile : profile.photos,
                     cats : [],
-                    gender : profile.gender
+                    gender : profile.gender,
+                    exp : 0
                 });
                 user.save(function (err) {
                     if(err){
@@ -60,7 +61,7 @@ function init(app, User){
         })
     }));
 
-    app.get('/auth/facebook/token', passport.authenticate('facebook-token', function (req, res) {
+    app.get('/auth/facebook/token', passport.authenticate('facebook-token'), function (req, res) {
         console.log("유저가 "+ req.param('access_token')+ "토큰을 이용해 로그인 요청을 하였습니다.");
         if(req.user){
             console.log(req.user + "가 로그인에 성공하였습니다.")
@@ -70,7 +71,7 @@ function init(app, User){
             console.log("잘못된 토큰이 감지되었습니다.");
             res.send(401, req.user);
         }
-    }));
+    });
 
     app.get('/auth/facebook/callback', passport.authenticate('facebook-token', {
         successRedirect : "/",
@@ -102,7 +103,7 @@ function init(app, User){
     });
 
     app.post('/user/getrank', function (req, res) {
-        User.find({$query : {}, $orderby : {exp : 1}}, function(err, result) {
+        User.find({$query : {}, $orderby : {exp : -1}}, function(err, result) {
             if(err){
                 console.log('/user/getrank db error');
                 throw err;

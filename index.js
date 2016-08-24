@@ -90,5 +90,3 @@ var Cat = mongoose.model('cats', catSchema);
 require('./route/oauth')(app,User);
 
 require('./route/catch')(app,User,Cat);
-
-require('./route/pay')(app, User);
