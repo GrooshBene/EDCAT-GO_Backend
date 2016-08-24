@@ -31,8 +31,8 @@ function init(app, User, Cat) {
         var cat = new Cat({
             _id : randomString.generate(15),
             name : req.param('catname'),
-            type : req.param('type'),
-            date : new Date()
+            cat_type : req.param('type'),
+            cat_date : new Date()
         });
 
         Cat.findOne({_id : cat._id}, function (err, result) {
