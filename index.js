@@ -75,7 +75,7 @@ var catSchema = new schema({
     },
 
     cat_type : {
-        type : Number
+        type : String
     },
 
     cat_date : {
