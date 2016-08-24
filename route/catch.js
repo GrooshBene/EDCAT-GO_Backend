@@ -35,14 +35,26 @@ function init(app, User, Cat) {
             date : new Date()
         });
 
-        cat.save(function (err, silence) {
+        Cat.find({_id : cat._id}, function (err, result) {
             if(err){
-                console.log('/catch/newcat cat db add error');
+                console.log('/catch/newcat duplicate check error');
                 throw err;
             }
-            console.log(cat + ' Was successfully added');
-            res.send(200, cat);
-        })
+            if(!result){
+                cat.save(function (err, silence) {
+                    if(err){
+                        console.log('/catch/newcat cat db add error');
+                        throw err;
+                    }
+                    console.log(cat + ' Was successfully added');
+                    res.send(200, cat);
+                })
+            }
+            else if(result){
+                console.log(cat + 'is already caught! Report Bug!');
+                res.send(401, "Cat has Duplicated! Report Bug!");
+            }
+        });
     });
 
 
