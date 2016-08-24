@@ -40,6 +40,7 @@ function init(app, User, Cat) {
                 console.log('/catch/newcat duplicate check error');
                 throw err;
             }
+            console.log("Cat Founded : " + result);
             if(!result){
                 cat.save(function (err, silence) {
                     if(err){
