@@ -59,6 +59,17 @@ function init(app, User, Cat) {
         });
     });
 
+    app.post('/catch/free', function (req, res) {
+        Cat.findOneAndRemove({_id : req.param('id')}, function (err, result) {
+            if(err){
+                console.log('/catch/free db error');
+                throw err;
+            }
+            console.log("Cat Id "+ req.param('id')+ "'s info : " + result);
+            res.send(200, result);
+        });
+    });
+
     app.post('/catch/catinfo', function (req, res) {
         Cat.findOne({_id : req.param('id')}, function (err, result) {
             if(err){
@@ -67,8 +78,9 @@ function init(app, User, Cat) {
             }
             console.log("Cat Id "+ req.param('id') + "'s info : "+ result);
             res.send(200, result);
-        })
-    })
+        });
+    });
+
 
 
 
