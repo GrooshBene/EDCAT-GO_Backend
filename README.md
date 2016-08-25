@@ -124,7 +124,17 @@ Backend Server of EDCAT-GO
 >> Cat Schema
 
 
+* /catch/free : 유저에 귀속된 고양이를 풀어줍니다.
 
+> Requiring Params
+
+>> id : 유저의 고유 번호
+
+>> cat_id : 고양이의 고유 번호
+
+> Response
+
+>> Update Result
 
 
 ==================
