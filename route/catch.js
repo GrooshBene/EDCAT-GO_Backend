@@ -60,14 +60,30 @@ function init(app, User, Cat) {
     });
 
     app.post('/catch/free', function (req, res) {
-        Cat.findOneAndRemove({_id : req.param('id')}, function (err, result) {
+        var temp_cat = [];
+        Cat.findOneAndRemove({_id : req.param('cat_id')}, function (err, result) {
             if(err){
                 console.log('/catch/free db error');
                 throw err;
             }
-            console.log("Cat Id "+ req.param('id')+ "'s info : " + result);
-            res.send(200, result);
+            console.log("Cat Id "+ req.param('cat_id')+ "'s info : " + result);
         });
+        User.findOne({_id : req.param('id')}, function (err, result) {
+            if(err){
+                console.log('/catch/free user db error');
+                throw err;
+            }
+            temp_cat = result.cats;
+            temp_cat.pop(req.param('cat_id'));
+            User.update({_id : req.param('id')}, {cats : temp_cat}, function (err, result) {
+                if(err){
+                    console.log('/catch/free user update error');
+                    throw err;
+                }
+                console.log('Cat id '+ req.param('cat_id')+ 'has removed from user '+ req.param('id'));
+                res.send(200, result);
+            })
+        })
     });
 
     app.post('/catch/catinfo', function (req, res) {
